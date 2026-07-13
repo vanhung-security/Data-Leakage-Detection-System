@@ -73,6 +73,8 @@ pkill -f detection.py
 rm /var/ossec/logs/dlp_alerts.log
 Author: VanHung
 
+
+
 ## 🎥 Video Demo
 Dưới đây là video demo quá trình hệ thống phát hiện rò rỉ dữ liệu và cảnh báo qua Telegram:
 
