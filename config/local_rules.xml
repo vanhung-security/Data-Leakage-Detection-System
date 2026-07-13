@@ -1,0 +1,113 @@
+<group name="local,syslog,sshd">
+<rule id="100001" level="5">
+<if_sid>5716</if_sid>
+<srcip>1.1.1.1</srcip>
+<description>sshd: authentication failed from IP 1.1.1.1.</description>
+<group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5</group>
+</rule>
+</group>
+<group name="sysmon">
+<rule id="61600" level="3" overwrite="yes">
+<if_sid>60004</if_sid>
+<field name="win.system.severityValue">^3$</field>
+<description>Windows Sysmon informational event</description>
+<options>no_full_log</options>
+</rule>
+<rule id="61605" level="3" overwrite="yes">
+<if_sid>61600</if_sid>
+<field name="win.system.eventID">^3$</field>
+<description>Sysmon - Event 3: Network connection detected</description>
+<options>no_full_log</options>
+<group>sysmon_event3,</group>
+</rule>
+<rule id="100002" level="12">
+<if_group>sysmon_event3</if_group>
+<field name="win.eventdata.image" type="pcre2">(?i)chrome\.exe</field>
+<description>CANH BAO: Chrome ket noi mang - co the ro ri du lieu</description>
+</rule>
+<rule id="100030" level="10">
+<if_group>sysmon_event_11</if_group>
+<field name="win.eventdata.targetFilename" type="pcre2">(?i)^[e-gE-G]:\\</field>
+<description>File duoc copy vao USB: $(win.eventdata.targetFilename)</description>
+<group>dlp,usb,</group>
+</rule>
+<rule id="100031" level="15">
+<if_sid>100030</if_sid>
+<field name="win.eventdata.targetFilename" type="pcre2">(?i)(salary|customer|confidential|api_key|password)\.(xlsx|pdf|docx|csv|txt|sql)</field>
+<description>NGUY HIEM: File nhay cam copy vao USB: $(win.eventdata.targetFilename)</description>
+<group>dlp,usb,sensitive_file,</group>
+<mitre><id>T1052</id></mitre>
+</rule>
+<rule id="100040" level="10">
+<if_sid>100002</if_sid>
+<field name="win.eventdata.destinationHostname" type="pcre2">(?i)1e100\.net|drive\.google|googleapis|docs\.google</field>
+<description>CANH BAO: Chrome ket noi Google Drive/Services</description>
+<group>dlp,cloud,google_drive,</group>
+<mitre><id>T1567</id></mitre>
+</rule>
+<rule id="100041" level="10">
+<if_sid>100002</if_sid>
+<field name="win.eventdata.destinationHostname" type="pcre2">(?i)dropbox\.com|dropboxapi</field>
+<description>CANH BAO: Chrome ket noi Dropbox</description>
+<group>dlp,cloud,dropbox,</group>
+<mitre><id>T1567</id></mitre>
+</rule>
+<rule id="100042" level="10">
+<if_sid>100002</if_sid>
+<field name="win.eventdata.destinationHostname" type="pcre2">(?i)onedrive\.live|sharepoint\.com|1drv\.ms</field>
+<description>CANH BAO: Chrome ket noi OneDrive</description>
+<group>dlp,cloud,onedrive,</group>
+<mitre><id>T1567</id></mitre>
+</rule>
+<rule id="100043" level="12">
+<if_sid>100002</if_sid>
+<field name="win.eventdata.destinationHostname" type="pcre2">(?i)mega\.nz|mega\.co\.nz</field>
+<description>NGUY HIEM: Chrome ket noi Mega.nz</description>
+<group>dlp,cloud,mega,</group>
+<mitre><id>T1567</id></mitre>
+</rule>
+<rule id="100044" level="12">
+<if_sid>100002</if_sid>
+<field name="win.eventdata.destinationHostname" type="pcre2">(?i)wetransfer\.com</field>
+<description>NGUY HIEM: Chrome ket noi WeTransfer</description>
+<group>dlp,cloud,wetransfer,</group>
+<mitre><id>T1567</id></mitre>
+</rule>
+<rule id="100020" level="10">
+<program_name>DLP_ALERT</program_name>
+<match>SENSITIVE_DATA_LEAKED</match>
+<description>Phát hiện rò rỉ dữ liệu nhạy cảm</description>
+</rule>
+<rule id="100021" level="15">
+<if_sid>100020</if_sid>
+<match>destination=ChatGPT</match>
+<description>NGUY HIEM: Du lieu nhay cam bi leak - Destination: ChatGPT</description>
+</rule>
+<rule id="100022" level="15">
+<if_sid>100020</if_sid>
+<match>destination=Email</match>
+<description>NGUY HIEM: Du lieu nhay cam bi leak - Destination: Email/Gmail</description>
+</rule>
+<rule id="100050" level="15">
+<if_sid>100020</if_sid>
+<match>destination=GoogleDrive</match>
+<description>NGUY HIEM: Phat hien rò rỉ dữ liệu nhạy cảm lên Google Drive (Correlation)</description>
+<group>dlp,leak_detected</group>
+</rule>
+<rule id="100025" level="15">
+<if_sid>100020</if_sid>
+<match type="pcre2">(?i)destination=Zalo</match>
+<description>NGUY HIEM: Du lieu nhay cam bi leak - Destination: Zalo</description>
+</rule>
+<rule id="100026" level="15">
+<if_sid>100020</if_sid>
+<match type="pcre2">(?i)destination=Messenger</match>
+<description>NGUY HIEM: Du lieu nhay cam bi leak - Destination: Messenger</description>
+</rule>
+<rule id="100060" level="15">
+<if_sid>100020</if_sid>
+<match>SCREENSHOT</match>
+<description>NGUY HIEM: Hanh vi CHUP MAN HINH bi phat hien!</description>
+<group>dlp,screenshot_leak</group>
+</rule>
+</group>
