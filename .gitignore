@@ -1,0 +1,9 @@
+# Bỏ qua file môi trường chứa Token
+.env
+# Bỏ qua file log cục bộ
+*.log
+# Bỏ qua thư mục cache của Python
+__pycache__/
+*.pyc
+# Bỏ qua thư mục .vscode
+.vscode/
