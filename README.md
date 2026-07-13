@@ -1,6 +1,9 @@
+Markdown
 # 🛡️ Data Leakage Detection System (DLDS)
 
 Dự án này là hệ thống giám sát và phát hiện rò rỉ dữ liệu nội bộ (DLP) dựa trên nền tảng **Wazuh SIEM**, **Sysmon** và **Python Detection Engine**. Dự án tập trung vào việc nhận diện sớm các hành vi truy cập trái phép, sao chép dữ liệu nhạy cảm ra thiết bị ngoại vi hoặc tải lên các nền tảng đám mây trái quy định.
+
+
 
 ## 🏗️ Kiến trúc Hệ thống
 
@@ -48,17 +51,17 @@ Hệ thống được thiết kế theo mô hình 4 lớp, đảm bảo khả n�
 │   └── clipboard.ps1
 ├── docs/               # Tài liệu dự án
 │   └── Architecture.md
-├── .gitignore
-├── LICENSE
-└── README.md
+├── reports/            # Báo cáo dự án
+├── slides/             # Slide thuyết trình
+└── demo_assets/        # Hình ảnh minh họa & Video demo
 🛠 Hướng dẫn Triển khai nhanh
-Cài đặt Engine:
+1. Cài đặt Engine:
 
 Bash
 cd scripts && sudo ./install.sh
-Cấu hình: Cập nhật TELEGRAM_TOKEN và CHAT_ID vào môi trường của bạn.
+2. Cấu hình: Cập nhật TELEGRAM_TOKEN và CHAT_ID vào file cấu hình hoặc biến môi trường.
 
-Chạy giám sát:
+3. Chạy giám sát:
 
 Bash
 python3 detection-engine/detection.py
@@ -71,10 +74,8 @@ pkill -f detection.py
 
 # Xóa các file log tạm
 rm /var/ossec/logs/dlp_alerts.log
+
 Author: VanHung
-
-
-
 ## 🎥 Video Demo
 Dưới đây là video demo quá trình hệ thống phát hiện rò rỉ dữ liệu và cảnh báo qua Telegram:
 
