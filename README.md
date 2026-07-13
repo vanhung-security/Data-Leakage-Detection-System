@@ -38,9 +38,7 @@ Hệ thống được thiết kế theo mô hình 4 lớp, đảm bảo khả n�
 ---
 
 ## 📂 Cấu trúc Dự án
-<p align="center">
-  <img src="demo_assets/architecture.png" alt="Sơ đồ kiến trúc" width="800"/>
-</p>
+
 ```text
 /
 ├── config/                  # Cấu hình hệ thống
@@ -78,7 +76,9 @@ II. Thiết bị	6-9	USB, Keylogger, In ấn (Print to PDF), Cổng ngoại vi	C
 III. Internet	10-12	Web chia sẻ, API Token, Ứng dụng Chat (Zalo/AI)	Kiểm soát Network DLP, Quản lý Scope API
 IV. Kỹ thuật	13-15	Tunneling (DNS/ICMP), Máy ảo, File ẩn	Deep Packet Inspection, Chặn RDP Clipboard
 (Chi tiết chi tiết từng kỹ thuật xem tại /docs/Architecture.md)
-
+<p align="center">
+  <img src="demo_assets/architecture.png" alt="Sơ đồ kiến trúc" width="800"/>
+</p>
 🛠 Hướng dẫn Triển khai nhanh
 Cài đặt Engine:
 
