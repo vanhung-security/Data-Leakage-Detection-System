@@ -1,0 +1,94 @@
+<Sysmon schemaversion="4.90">
+<HashAlgorithms>sha256</HashAlgorithms>
+<EventFiltering>
+<ProcessCreate onmatch="include">
+<Image condition="contains">chrome.exe</Image>
+<Image condition="contains">msedge.exe</Image>
+<Image condition="contains">firefox.exe</Image>
+</ProcessCreate>
+<ProcessCreate onmatch="include">
+<Image condition="contains">outlook.exe</Image>
+<Image condition="contains">telegram.exe</Image>
+<Image condition="contains">discord.exe</Image>
+<Image condition="contains">zalo.exe</Image>
+</ProcessCreate>
+<ProcessCreate onmatch="include">
+<Image condition="contains">snippingtool.exe</Image>
+<Image condition="contains">snipaste.exe</Image>
+</ProcessCreate>
+<ProcessCreate onmatch="include">
+<Image condition="contains">dropbox</Image>
+<Image condition="contains">onedrive</Image>
+<Image condition="contains">mega</Image>
+</ProcessCreate>
+<ProcessTerminate onmatch="include"/>
+<FileCreate onmatch="include">
+<TargetFilename condition="end with">.docx</TargetFilename>
+<TargetFilename condition="end with">.xlsx</TargetFilename>
+<TargetFilename condition="end with">.pdf</TargetFilename>
+<TargetFilename condition="end with">.txt</TargetFilename>
+<TargetFilename condition="end with">.sql</TargetFilename>
+<TargetFilename condition="end with">.csv</TargetFilename>
+</FileCreate>
+<FileCreate onmatch="include">
+<TargetFilename condition="contains">salary</TargetFilename>
+<TargetFilename condition="contains">customer</TargetFilename>
+<TargetFilename condition="contains">password</TargetFilename>
+<TargetFilename condition="contains">api</TargetFilename>
+<TargetFilename condition="contains">confidential</TargetFilename>
+<TargetFilename condition="contains">secret</TargetFilename>
+</FileCreate>
+<FileCreate onmatch="include">
+<TargetFilename condition="begin with">D:\</TargetFilename>
+<TargetFilename condition="begin with">E:\</TargetFilename>
+<TargetFilename condition="begin with">F:\</TargetFilename>
+<TargetFilename condition="begin with">G:\</TargetFilename>
+<TargetFilename condition="begin with">H:\</TargetFilename>
+</FileCreate>
+<NetworkConnect onmatch="include">
+<Image condition="contains">chrome.exe</Image>
+<Image condition="contains">msedge.exe</Image>
+<Image condition="contains">firefox.exe</Image>
+</NetworkConnect>
+<NetworkConnect onmatch="include">
+<DestinationHostname condition="contains">openai</DestinationHostname>
+<DestinationHostname condition="contains">oaiusercontent</DestinationHostname>
+<DestinationHostname condition="contains">cdn.openai</DestinationHostname>
+<DestinationHostname condition="contains">chatgpt</DestinationHostname>
+</NetworkConnect>
+<NetworkConnect onmatch="include">
+<DestinationHostname condition="contains">drive.google</DestinationHostname>
+<DestinationHostname condition="contains">dropbox</DestinationHostname>
+<DestinationHostname condition="contains">onedrive</DestinationHostname>
+<DestinationHostname condition="contains">mega</DestinationHostname>
+<DestinationHostname condition="contains">wetransfer</DestinationHostname>
+<DestinationHostname condition="contains">sendanywhere</DestinationHostname>
+</NetworkConnect>
+<NetworkConnect onmatch="include">
+<DestinationHostname condition="contains">gmail</DestinationHostname>
+<DestinationHostname condition="contains">outlook</DestinationHostname>
+</NetworkConnect>
+<DnsQuery onmatch="include">
+<QueryName condition="contains">openai</QueryName>
+<QueryName condition="contains">oaiusercontent</QueryName>
+<QueryName condition="contains">chatgpt</QueryName>
+</DnsQuery>
+<DnsQuery onmatch="include">
+<QueryName condition="contains">drive.google</QueryName>
+<QueryName condition="contains">dropbox</QueryName>
+<QueryName condition="contains">onedrive</QueryName>
+<QueryName condition="contains">mega</QueryName>
+</DnsQuery>
+<DnsQuery onmatch="include">
+<QueryName condition="contains">gmail</QueryName>
+<QueryName condition="contains">outlook</QueryName>
+</DnsQuery>
+<FileCreateStreamHash onmatch="include">
+<TargetFilename condition="end with">.docx</TargetFilename>
+<TargetFilename condition="end with">.xlsx</TargetFilename>
+<TargetFilename condition="end with">.pdf</TargetFilename>
+<TargetFilename condition="end with">.sql</TargetFilename>
+<TargetFilename condition="end with">.csv</TargetFilename>
+</FileCreateStreamHash>
+</EventFiltering>
+</Sysmon>
