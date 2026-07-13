@@ -1,0 +1,9 @@
+salary
+confidential
+password
+secret
+internal only
+customer
+database
+api_key
+cmnd
