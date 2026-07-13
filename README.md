@@ -38,7 +38,9 @@ Hệ thống được thiết kế theo mô hình 4 lớp, đảm bảo khả n�
 ---
 
 ## 📂 Cấu trúc Dự án
-
+<p align="center">
+  <img src="demo_assets/architecture.png" alt="Sơ đồ kiến trúc" width="800"/>
+</p>
 ```text
 /
 ├── config/                  # Cấu hình hệ thống
