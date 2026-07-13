@@ -1,0 +1,44 @@
+Mô hình kiến trúc 4 lớp 
+
+Hệ thống được vận hành dựa trên sự phối hợp của các lớp thành phần sau:
+
+- 
+
+**Lớp Thiết bị đầu cuối (Endpoint Layer):** Gồm các máy tính Windows của nhân viên có cài đặt **Sysmon** để ghi lại các sự kiện hệ thống (chạy ứng dụng, kết nối mạng, tương tác clipboard) và **Wazuh Agent** để thu thập rồi gửi log về máy chủ.
+
+- 
+
+**Lớp Giám sát bảo mật (Security Monitoring Layer):** Là máy chủ Ubuntu cài đặt nền tảng **Wazuh** để nhận log (Wazuh Manager), lưu trữ/lập chỉ mục (Wazuh Indexer) và hiển thị giao diện theo dõi cho quản trị viên (Wazuh Dashboard).
+
+- 
+
+**Lớp Phát hiện (Detection Layer):** Sử dụng một engine bằng Python để phân tích nội dung chuyên sâu nhằm phát hiện từ khóa nhạy cảm (như Salary, API_KEY), nhận diện file qua mã băm (Hash SHA256) và tính điểm rủi ro (Risk Scoring) cho người dùng.
+
+- 
+
+**Lớp Cơ sở dữ liệu (Database Layer):** Sử dụng MySQL hoặc PostgreSQL để lưu trữ danh sách từ khóa mật, vân tay file quan trọng, điểm rủi ro và lịch sử cảnh báo.
+
+2. Quy trình hoạt động của hệ thống 
+
+Nguyên lý hoạt động diễn ra theo luồng khép kín từ lúc phát hiện đến khi cảnh báo:
+1. 
+**Phát sinh sự kiện:** Người dùng thực hiện các thao tác như sao chép dữ liệu, gửi tin nhắn qua Zalo/ChatGPT, chụp màn hình hoặc tải file lên Cloud (Google Drive, Dropbox,...).
+
+2. 
+**Ghi nhận log:** Công cụ **Sysmon** trên máy nhân viên ghi lại các hoạt động này dưới dạng log sự kiện hệ thống.
+
+3. 
+**Chuyển tiếp dữ liệu:** **Wazuh Agent** thu thập các bản tin log từ Sysmon và gửi về máy chủ Wazuh Manager tập trung.
+
+4. **Phân tích nội dung:** Wazuh Manager tiếp nhận và chuyển dữ liệu cho **Detection Engine**. Tại đây, engine sẽ so sánh nội dung log với danh sách từ khóa và mã băm file nhạy cảm trong cơ sở dữ liệu.
+
+5. **Đánh giá rủi ro:** Hệ thống tính điểm rủi ro dựa trên hành vi (ví dụ: upload file ra Internet được +50 điểm). Nếu vượt ngưỡng, người dùng sẽ bị đánh dấu là "High Risk User".
+
+6. 
+**Kích hoạt cảnh báo:** Nếu xác định có hành vi rò rỉ, hệ thống đồng thời thực hiện:
+
+  - Hiển thị **Popup thông báo** trực tiếp trên màn hình máy nhân viên.
+
+  - Đẩy cảnh báo lên **Wazuh Dashboard** cho nhóm quản trị SOC.
+
+  - Gửi tin nhắn tức thời qua **Telegram Bot** cho quản trị viên.
